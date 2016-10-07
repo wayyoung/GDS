@@ -30,7 +30,7 @@ public class GDS extends java.util.Properties {
 
 	private static Logger logger = LoggerFactory.getLogger(GDS_LOGGER);
 
-	public static final String GDS_VERSION = "1.0.3";
+	public static final String GDS_VERSION = "1.0.4";
 	public static final String GDS_CONFIG = "GDS_CONFIG";
 	public static final String GDS_TESTBED = "GDS_TESTBED";
 //	public static final String GDS_WORKSPACE = "GDS_WORKSPACE";
@@ -64,6 +64,7 @@ public class GDS extends java.util.Properties {
 	ITelnet telnet = null;
 
 	boolean initialized = false;
+	boolean postInitialized=false;
 	boolean ccInitialized = false;
 
 	TFTPServer tftpServer;
@@ -101,47 +102,35 @@ public class GDS extends java.util.Properties {
 	}
 
 
-	/*
-	 * void setupWorkspaceLogAppender(){ LoggerContext context= (LoggerContext)
-	 * LogManager.getContext();
-	 * executionLogAppender=FileAppender.createAppender(this.getWorkspace()+
-	 * "/execution.log",String.valueOf(this.systemLogAppend), "false",
-	 * "GDS_EXECUTION_LOG_APPENDER", "false", "false", "true", "8192",
-	 * PatternLayout.createDefaultLayout(), null, "false",null ,null);
-	 * executionLogAppender.start();
-	 * context.getRootLogger().addAppender(executionLogAppender);
-	 * context.updateLoggers(); }
-	 */
+
 
 	public boolean postInit() throws FileNotFoundException, IOException {
 
-		// if(this.getHostTestbed()==null){
-		// this.setHostTestbed(java.lang.System.getProperty("user.dir")+"/GDS_TESTBED");
-		// FileUtils.forceMkdir(new File(this.getHostTestbed()));
-		// }
+		if (!postInitialized) {
+			initCC();
+			if (getTestbed() == null) {
+				this.setTestbed(new File("TESTBED").getCanonicalPath());
+				FileUtils.forceMkdir(new File(this.getTestbed()));
+			}
 
-		initCC();
-		if (getTestbed() == null) {
-			this.setTestbed(new File("TESTBED").getCanonicalPath());
-			FileUtils.forceMkdir(new File(this.getTestbed()));
+
+			logger.info(GDS_CONFIG + ": " + getConfig());
+			logger.info(GDS_TESTBED + ": " + getTestbed());
+
+			if (this.isMock()) {
+				logger.info(MOCK + " = " + this.isMock());
+			}
+			postInitialized=true;
+			logger.info("postInit() done");
+
 		}
-
-		logger.info("GDS_VERSION: " + GDS_VERSION);
-		logger.info(GDS_CONFIG + ": " + getConfig());
-		logger.info(GDS_TESTBED + ": " + getTestbed());
-
-		if (this.isMock()) {
-			logger.info(MOCK + " = " + this.isMock());
-		}
-		logger.info("postInit() done");
-
 		return true;
 	}
 
 	public boolean preInit() throws FileNotFoundException, IOException {
 
 		if (!initialized) {
-
+			logger.info("GDS_VERSION: " + GDS_VERSION);
 			Properties sysConfig = System.getProperties();// new
 															// SystemConfiguration();
 			if (sysConfig.getProperty(GDS_CONFIG) != null) {
@@ -154,17 +143,7 @@ public class GDS extends java.util.Properties {
 				this.setTestbed(new File(sysConfig.getProperty(GDS_TESTBED)).getCanonicalPath());
 //				logger.info("GDS_TESTBED: " + this.getTestbed());
 			}
-//			if (sysConfig.getProperty(GDS_WORKSPACE) != null) {
-//				this.setWorkspace(sysConfig.getProperty(GDS_WORKSPACE));
-//				logger.info("GDS_WORKSPACE: " + sysConfig.getProperty(GDS_WORKSPACE));
-//			}
 
-			// this.setProperty(RUNTIME_HOME, new
-			// File(sysConfig.getString(RUNTIME_HOME)).getCanonicalPath());
-
-
-
-//			sysConfig.keySet().iterator()
 			for(Object k:sysConfig.keySet()){
 				if(k!=null && k.toString().startsWith("gds.") && sysConfig.get(k.toString())!=null){
 					this.put(k.toString(),sysConfig.get(k.toString()));
@@ -176,9 +155,10 @@ public class GDS extends java.util.Properties {
 			}
 
 			initialized = true;
+			logger.info("preInit() done");
 
 		}
-		logger.info("preInit() done");
+
 		return true;
 
 	}

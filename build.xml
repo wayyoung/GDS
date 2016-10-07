@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_GDS_jar" name="GDS">
+<project default="GDS_jar" name="GDS">
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
 
     <property name="src.java.dir" location="src/main/java" />
 	<property name="src.resources.dir" location="src/main/resources" />
     <property name="build.dir" location="build" />
+	<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="launch4j/launch4j.jar:launch4j/lib/xstream.jar" />
     <path id="build.classpath">
         <fileset dir=".">
             <include name="lib/commons-io-2.5.jar" />
@@ -41,7 +42,7 @@
         <delete dir="${build.dir}/*" />
     </target>
 
-    <target name="create_GDS_jar" depends="clean,compile">
+    <target name="GDS_jar" depends="clean,compile">
     	<jar destfile="lib/GDS.jar" filesetmanifest="mergewithoutmain">
     	            <manifest>
     	                <attribute name="Main-Class" value="gds.GDSCC"/>
@@ -51,6 +52,10 @@
     	</jar>
         <!--copy file="lib/GDS_RUNTIME.jar" tofile="lib/GDS.jar" /-->
     </target>
-	
+	<target name="exe" depends="GDS_jar">
+		<launch4j configFile="GDSTerm.launch4j.xml" />
+		<launch4j configFile="GDSCC_5501/GDSCC_5501.launch4j.xml" />
+		<launch4j configFile="GDSCC_5502/GDSCC_5502.launch4j.xml" />
+	</target>
 
 </project>

@@ -165,7 +165,7 @@ public class GDSCC {
 	 */
 
 	public boolean initRemoteClient() {
-		logger.info("GDS_VERSION: " + GDS.GDS_VERSION + " @" + System.getProperty("user.dir"));
+		logger.info("GDS_VERSION: " + GDS.GDS_VERSION + " @ " + System.getProperty("user.dir"));
 		boolean res = true;
 		gdsConsole = null;
 		remote = true;
@@ -215,7 +215,7 @@ public class GDSCC {
 	 */
 
 	public boolean init() {
-		logger.info("GDS_VERSION: " + GDS.GDS_VERSION);
+		logger.info("GDSCC_VERSION: " + GDS.GDS_VERSION);
 		gdsConsole = null;
 
 		boolean res = true;
