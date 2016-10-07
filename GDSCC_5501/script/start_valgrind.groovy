@@ -1,0 +1,2 @@
+cc.cmd("export LD_PRELOAD=/vendor/debug/system/lib/libOMX_VSRC_I1.so:/vendor/debug/system/lib/libOMX_VSPL.so:/vendor/debug/system/lib/libOMX_VMFE_I1.so:/vendor/debug/system/lib/libOMX_VVHE.so")
+cc.cmd("/vendor/valgrind/bin/valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --extra-debuginfo-path=/vendor/debug --allow-mismatched-debuginfo=yes /vendor/OMX_ILAP 23 3")

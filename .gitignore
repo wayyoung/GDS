@@ -1,0 +1,5 @@
+bin
+test-output
+build
+launch4j.log
+*.system.log

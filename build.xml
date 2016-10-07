@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_GDS_jar" name="GDS">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+
+    <property name="src.java.dir" location="src/main/java" />
+	<property name="src.resources.dir" location="src/main/resources" />
+    <property name="build.dir" location="build" />
+    <path id="build.classpath">
+        <fileset dir=".">
+            <include name="lib/commons-io-2.5.jar" />
+            <include name="lib/commons-net-3.5.jar" />
+        	<include name="lib/jsch-0.1.53.jar" />
+            <include name="lib/commons-logging-1.2.jar" />
+            <include name="lib/JTattoo-1.6.11.jar" />
+            <include name="lib/slf4j-api-1.7.13.jar" />
+        	<include name="lib/groovy-all-2.4.7.jar" />
+        	<!--
+            <include name="lib/log4j-slf4j-impl-2.5.jar" />
+            <include name="lib/log4j-api-2.5.jar" />
+            <include name="lib/log4j-core-2.5.jar" />
+        	<include name="lib/commons-lang-2.6.jar" />
+        	-->
+        </fileset>
+    </path>
+
+    <target name="compile" >
+        <mkdir dir="${build.dir}" />
+        <javac srcdir="${src.java.dir}" destdir="${build.dir}" classpathref="build.classpath" />
+        <copy todir="${build.dir}">
+            <fileset dir="${src.java.dir}">
+                <exclude name="**/*.java" />
+            </fileset>
+        	<fileset dir="${src.resources.dir}" />
+        </copy>
+    </target>
+
+
+    <target name="clean" description="Delete all generated files">
+        <mkdir dir="${build.dir}" />
+        <delete dir="${build.dir}/*" />
+    </target>
+
+    <target name="create_GDS_jar" depends="clean,compile">
+    	<jar destfile="lib/GDS.jar" filesetmanifest="mergewithoutmain">
+    	            <manifest>
+    	                <attribute name="Main-Class" value="gds.GDSCC"/>
+    	                <attribute name="Class-Path" value="."/>
+    	            </manifest>
+    	            <fileset dir="build"/>
+    	</jar>
+        <!--copy file="lib/GDS_RUNTIME.jar" tofile="lib/GDS.jar" /-->
+    </target>
+	
+
+</project>
