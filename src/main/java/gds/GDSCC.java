@@ -974,6 +974,25 @@ public class GDSCC {
 	}
 
 
+	public int getClearResponseWaitTimeInMillis() {
+		try {
+			return getConsole().getClearResponseWaitTimeInMillis();
+		} catch (RemoteException e) {
+			// logger.log(Level.FATAL, "ERROR!!", e);
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setClearResponseWaitTimeInMillis(int clearResponseWaitTimeInMillis) {
+		try {
+			getConsole().setClearResponseWaitTimeInMillis(clearResponseWaitTimeInMillis);
+		} catch (RemoteException e) {
+			// logger.log(Level.FATAL, "ERROR!!", e);
+			throw new RuntimeException(e);
+		}
+	}
+
+
 	public static void main(String[] args) throws Exception {
 
 		String cf = null;

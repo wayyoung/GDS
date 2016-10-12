@@ -117,4 +117,6 @@ public interface IControlConsole extends java.rmi.Remote {
 
 	public void executeFScript(int idx)throws RemoteException;
 
+	public int getClearResponseWaitTimeInMillis()throws RemoteException;
+	public void setClearResponseWaitTimeInMillis(int clearResponseWaitTimeInMillis)throws RemoteException;
 }

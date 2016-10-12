@@ -63,8 +63,19 @@ public abstract class AbstractControlConsole implements IControlConsole{
 
 
 	protected int defaultTimeout=30;
-	protected int checkTimeInMillis=10;
+	protected int checkTimeInMillis=50;
 	protected int loopSendSleepTimeInMillis=2;
+	protected int clearResponseWaitTimeInMillis=50;
+
+	@Override
+	public int getClearResponseWaitTimeInMillis() {
+		return clearResponseWaitTimeInMillis;
+	}
+
+	@Override
+	public void setClearResponseWaitTimeInMillis(int clearResponseWaitTimeInMillis) {
+		this.clearResponseWaitTimeInMillis = clearResponseWaitTimeInMillis;
+	}
 
 	protected String arduinoConnectionString;
 
@@ -539,6 +550,13 @@ public abstract class AbstractControlConsole implements IControlConsole{
 	public void clearResponse(){
 		logCCEvent("clearResponse()");
 		if(this.resp!=null){
+			if(clearResponseWaitTimeInMillis>0){
+				try {
+					Thread.sleep(clearResponseWaitTimeInMillis);
+				} catch (InterruptedException e) {
+
+				}
+			}
 			this.resp.clear();
 		}
 	}

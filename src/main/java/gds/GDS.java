@@ -30,7 +30,7 @@ public class GDS extends java.util.Properties {
 
 	private static Logger logger = LoggerFactory.getLogger(GDS_LOGGER);
 
-	public static final String GDS_VERSION = "1.0.4";
+	public static final String GDS_VERSION = "1.0.5";
 	public static final String GDS_CONFIG = "GDS_CONFIG";
 	public static final String GDS_TESTBED = "GDS_TESTBED";
 //	public static final String GDS_WORKSPACE = "GDS_WORKSPACE";
@@ -368,8 +368,8 @@ public class GDS extends java.util.Properties {
 		if (telnet == null) {
 			telnet = newTelnet();
 			telnet.setPrompt(this.getTelnetPrompt());
-			telnet.setLogFile("telnet.log");
-			telnet.saveLog();
+			telnet.setFileLogPath("telnet.log");
+			telnet.saveFileLog();
 			logger.info("telnet created");
 		} else {
 			logger.info("telnet existed");
