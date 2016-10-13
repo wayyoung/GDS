@@ -1,4 +1,4 @@
-package autoguard;
+package gds.ffmpeg;
 
 import static org.bytedeco.javacpp.avcodec.av_free_packet;
 import static org.bytedeco.javacpp.avcodec.avcodec_close;

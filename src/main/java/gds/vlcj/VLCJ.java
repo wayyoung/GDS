@@ -1,4 +1,4 @@
-package autoguard;
+package gds.vlcj;
 
 import java.io.File;
 

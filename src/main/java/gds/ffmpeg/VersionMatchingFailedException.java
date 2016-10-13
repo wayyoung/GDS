@@ -1,4 +1,4 @@
-package autoguard;
+package gds.ffmpeg;
 
 /**
  * Created by causer on 3/28/16.
