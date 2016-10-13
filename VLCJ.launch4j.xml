@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>true</dontWrapJar>
+  <headerType>console</headerType>
+  <jar>lib\GDS.jar</jar>
+  <outfile>D:\Work\workspace\GDS\VLCJ.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon></icon>
+  <classPath>
+    <mainClass>autoguard.VLCJ</mainClass>
+    <cp>lib\commons-io-2.5.jar</cp>
+    <cp>lib\commons-net-3.5.jar</cp>
+    <cp>lib\JTattoo-1.6.11.jar</cp>
+    <cp>lib\groovy-all-2.4.7.jar</cp>
+    <cp>lib\jssc-2.8.0.jar</cp>
+    <cp>lib\slf4j-api-1.7.13.jar</cp>
+    <cp>lib\log4j\log4j-slf4j-impl-2.5.jar</cp>
+    <cp>lib\log4j\log4j-api-2.5.jar</cp>
+    <cp>lib\log4j\log4j-core-2.5.jar</cp>
+    <cp>lib\vlcj\jna-4.2.2.jar</cp>
+    <cp>lib\vlcj\jna-platform-4.2.2.jar</cp>
+    <cp>lib\vlcj\vlcj-3.10.1.jar</cp>
+    <cp>lib\ffmpeg\ffmpeg-windows-x86_64.jar</cp>
+    <cp>lib\ffmpeg\ffmpeg.jar</cp>
+    <cp>lib\ffmpeg\javacpp.jar</cp>
+  </classPath>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion>1.8.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+</launch4jConfig>

@@ -10,5 +10,10 @@
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/groovy-all-2.4.7.jar"/>
 	<classpathentry kind="lib" path="lib/jssc-2.8.0.jar"/>
+	<classpathentry kind="lib" path="lib/vlcj/jna-4.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/vlcj/jna-platform-4.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/vlcj/vlcj-3.10.1.jar"/>
+	<classpathentry kind="lib" path="lib/ffmpeg/ffmpeg.jar"/>
+	<classpathentry kind="lib" path="lib/ffmpeg/javacpp.jar"/>
 	<classpathentry kind="output" path="build/"/>
 </classpath>
