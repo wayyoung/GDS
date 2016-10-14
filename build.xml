@@ -50,7 +50,7 @@
     	            </manifest>
     	            <fileset dir="build"/>
     	</jar>
-        <!--copy file="lib/GDS_RUNTIME.jar" tofile="lib/GDS.jar" /-->
+        <copy file="lib/GDS.jar" tofile="lib/GDS_RUNTIME.jar" />
     </target>
 	<target name="exe" depends="GDS_jar">
 		<launch4j configFile="GDSTerm.launch4j.xml" />
