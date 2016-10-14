@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.Locale;
 
 import javax.imageio.ImageIO;
@@ -61,7 +62,7 @@ public class SwingControlConsole extends AbstractControlConsole implements Actio
 
 
 	private JFrame frame;
-	private static final Logger logger = LoggerFactory.getLogger(SwingControlConsole.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(GDS.GDS_LOGGER);
 	// ButtonDialog bdialog;//=new ButtonDialog();
 	FunctionScriptDialog fsdlg;
 
@@ -396,18 +397,53 @@ public class SwingControlConsole extends AbstractControlConsole implements Actio
 		UI_setTitle();
 	}
 
+
+
+	static final byte[] FIRMATA_HEADER0={(byte)0xF9,(byte)0x02,(byte)0x03,(byte)0xF0,(byte)0x79,(byte)0x02,(byte)0x03,(byte)0x53,(byte)0x00,(byte)0x74};
+	static final byte[] FIRMATA_HEADER1={(byte)0xF0,(byte)0x79,(byte)0x02,(byte)0x03,(byte)0x53,(byte)0x00,(byte)0x74};
 	private boolean _connectArduino() throws IOException {
 
 		try {
 			SerialPortSetting setting=new SerialPortSetting(this.arduinoConnectionString);
-			if(arduinoConnection!=null && (!arduinoConnection.getSerialPortSetting().equals(setting))){
-				arduinoConnection.close();
-				arduinoConnection=null;
+			setting.setDirectInputStream(true);
+
+			if(arduinoConnection!=null){
+				if(!arduinoConnection.getSerialPortSetting().equals(setting)) {
+					arduinoConnection.close();
+					arduinoConnection=null;
+				}else{
+					return true;
+				}
 			}
-			if(this.arduinoConnection==null){
-				this.arduinoConnection= SerialPortManager.newConnection();
-			}
+			this.arduinoConnection= SerialPortManager.newConnection();
 			this.arduinoConnection.open(setting);
+			this.arduinoConnection.getOutputStream().write(new byte[]{(byte)0xF0,(byte)0x79,(byte)0xF7});
+			this.arduinoConnection.getOutputStream().flush();
+			byte[] resp=new byte[1024];
+			int len=0;
+			boolean firmataConnected=false;
+			for(int i=0;i<1000;i++){
+				len=this.arduinoConnection.getInputStream().read(resp);
+				if(len>0){
+					if(Arrays.equals(Arrays.copyOf(resp, FIRMATA_HEADER0.length),FIRMATA_HEADER0) || Arrays.equals(Arrays.copyOf(resp, FIRMATA_HEADER1.length),FIRMATA_HEADER1)){
+						firmataConnected=true;
+						Thread.sleep(50);
+					}else{
+						this.arduinoConnection.getOutputStream().write(new byte[]{(byte)0xF0,(byte)0x79,(byte)0xF7});
+						this.arduinoConnection.getOutputStream().flush();
+						Thread.sleep(50);
+						continue;
+					}
+					break;
+				}
+
+				Thread.sleep(100);
+			}
+			if(firmataConnected){
+				logger.info("Firmata Arduino connected");
+			}else{
+				throw new RuntimeException("Firmata Arduino connected failed!! len="+len);
+			}
 		} catch (Exception e) {
 			throw new IOException(e);
 		}

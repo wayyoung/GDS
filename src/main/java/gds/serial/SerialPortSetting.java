@@ -53,8 +53,19 @@ public class SerialPortSetting
     public static final int FLOWCONTROL_XONXOFF_IN = 4;
     public static final int FLOWCONTROL_XONXOFF_OUT = 8;
 
+    boolean directInputStream=false;
 
-    public static String parityToString(int parity)
+
+
+    public boolean isDirectInputStream() {
+		return directInputStream;
+	}
+
+	public void setDirectInputStream(boolean directInputStream) {
+		this.directInputStream = directInputStream;
+	}
+
+	public static String parityToString(int parity)
     {
         String strParity;
         switch( parity )
@@ -390,4 +401,9 @@ public class SerialPortSetting
     	return strName;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+    	if(obj==null)return false;
+    	return this.toString().equals(obj.toString());
+    }
 }

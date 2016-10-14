@@ -21,6 +21,9 @@ public class JSSCSerialPortConnection  implements ISerialPortConnection {
 	protected JSSCOutputStream ous;
 	@Override
 	public InputStream getInputStream() {
+		if(this.directInputStream){
+			return this.spis;
+		}
 		return this.inputStream;
 	}
 
@@ -68,14 +71,18 @@ public class JSSCSerialPortConnection  implements ISerialPortConnection {
 
 	}
 
+	boolean directInputStream=false;
 	@Override
 	public void open(SerialPortSetting setting) throws IOException {
 		this.setSerialPortSetting(setting);
 		this.open();
-		try{
-			setUpSerialPortDataListener();
-		} catch (SerialPortException ee) {
-			throw new IOException(ee);
+		this.directInputStream=this.settings.isDirectInputStream();
+		if(!directInputStream){
+			try{
+				setUpSerialPortDataListener();
+			} catch (SerialPortException ee) {
+				throw new IOException(ee);
+			}
 		}
 	}
 

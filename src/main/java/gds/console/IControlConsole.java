@@ -95,6 +95,7 @@ public interface IControlConsole extends java.rmi.Remote {
 
 	public String getArduinoConnectionString() throws RemoteException;
 
+
 	public void type(char ch) throws RemoteException;
 
 	public void setFileLogPath(String config) throws RemoteException;
