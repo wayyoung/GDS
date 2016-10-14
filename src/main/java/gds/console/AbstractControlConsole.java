@@ -63,7 +63,7 @@ public abstract class AbstractControlConsole implements IControlConsole{
 
 
 	protected int defaultTimeout=30;
-	protected int checkTimeInMillis=50;
+	protected int checkTimeInMillis=5;
 	protected int loopSendSleepTimeInMillis=2;
 	protected int clearResponseWaitTimeInMillis=50;
 
@@ -567,7 +567,16 @@ public abstract class AbstractControlConsole implements IControlConsole{
 		for(int i=0;i<GEM_BTN_SIZE;i++){
 			val1 += (btnStatus[i]<<(2+i));
 		}
+//		byte[] resp=new byte[128];
 		this.arduinoConnection.getOutputStream().write(new byte[]{(byte)0x90,(byte)val1,(byte)0x00});
+		this.arduinoConnection.getOutputStream().flush();
+		try {
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+
+		}
+//		int len=this.arduinoConnection.getInputStream().read(resp);
+
 
 	}
 
@@ -708,7 +717,7 @@ public abstract class AbstractControlConsole implements IControlConsole{
 				return false;
 			}
 			try {
-				Thread.sleep(1);
+				Thread.sleep(checkTimeInMillis);
 			} catch (InterruptedException e) {
 			}
 

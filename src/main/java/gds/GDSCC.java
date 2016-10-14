@@ -171,7 +171,7 @@ public class GDSCC {
 		remote = true;
 
 		try {
-			proxyRegistry = LocateRegistry.getRegistry(proxyPort);
+			proxyRegistry = LocateRegistry.getRegistry("127.0.0.1",proxyPort);
 			gdsConsole = (IControlConsole) proxyRegistry.lookup(GDSCCID());
 			if (!gdsConsole.getVersion().equals(GDS.GDS_VERSION)) {
 				throw new RuntimeException("GDS version is mismatched!! Remote GDSCC:" + gdsConsole.getVersion()
@@ -247,7 +247,7 @@ public class GDSCC {
 
 								proxyRegistry = null;
 							}
-
+							System.setProperty("java.rmi.server.hostname","127.0.0.1");
 							proxyRegistry = LocateRegistry.createRegistry(proxyPort);
 							gdsConsole = new SwingControlConsole();
 							gdsConsole.setName(GDSCCID());
@@ -283,7 +283,7 @@ public class GDSCC {
 					}
 				});
 
-				proxyRegistry = LocateRegistry.getRegistry(proxyPort);
+				proxyRegistry = LocateRegistry.getRegistry("127.0.0.1",proxyPort);
 				gdsConsole = (IControlConsole) proxyRegistry.lookup(GDSCCID());
 				logger.info("GDSCC is bind to remote ID: " + GDSCCID());
 			}
