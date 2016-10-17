@@ -366,6 +366,12 @@ public class SwingControlConsole extends AbstractControlConsole implements Actio
 			}
 			this.sessionLogWriter.setBackendWriter(null);
 		}
+
+		try {
+			if(fileLog!=null)logger.info("closeFileLog: " + new File(this.fileLog).getCanonicalPath());
+		} catch (IOException e) {
+
+		}
 		fileLog = null;
 	}
 
@@ -506,7 +512,7 @@ public class SwingControlConsole extends AbstractControlConsole implements Actio
 			return;
 		_closeFileLog();
 		try {
-			logger.info("closeFileLog: " + new File(this.fileLog).getCanonicalPath());
+
 			this.mntmStartLog.setText("Save Log");
 		} catch (Exception ex) {
 		}
