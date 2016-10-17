@@ -32,6 +32,6 @@ void loop()
       if(10==i) i=0;
       
       SEG7.sendDigits(17,17,17,i,false); // 送出數值顯示
-      delay(66);         // 因為是1/100秒故延遲時間為10ms
+      delay(10);         // 因為是1/100秒故延遲時間為10ms
     }
 }
